@@ -11,13 +11,13 @@ You can also add to cart, order and checkout and likewise pay using paystack or 
 Clone the project
 
 ```bash
-  git clone https://github.com/jay-davisphem/selo
+  git clone https://github.com/jay-davisphem/Selo-E-Commerce-Web-App
 ```
 
 Go to the project directory
 
 ```bash
-  cd selo
+  cd Selo-E-Commerce-Web-App
 ```
 
 Install dependencies
