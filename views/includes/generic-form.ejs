@@ -1,0 +1,25 @@
+<form class="<%= action %>-form" action="/<%= action %>" method="POST">
+    <div class="form-control">
+        <label for="email">E-Mail</label>
+        <input type="email" name="email" id="email" value="<%= data.email %>"required>
+    </div>
+    <div class="form-control">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" value="<%= data.password %>"required>
+    </div>
+    <% if (action === 'signup'){ %>
+        <div class="form-control">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" name="confirmPassword" id="password" required>
+        </div>
+   <% }%>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <span><a href="/reset">Forgot Password?</a></span>
+    <button class="btn" type="submit">
+        <% if(action === 'login'){ %> 
+            Login 
+        <% }else{ %>
+            Signup
+        <% } %>
+    </button>
+</form>

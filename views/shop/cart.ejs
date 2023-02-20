@@ -1,0 +1,33 @@
+<%- include('../includes/head.ejs') %>
+</head>
+</body>
+<%- include('../includes/navigation.ejs') %>
+    <main>
+        <p>Total Price: $<%= totalPrice.toFixed(2) %></p>
+        <% if ( products.length > 0 ) { %>
+        <ul>
+        <% for(let product of products){ %>
+        <li>
+             
+            <p><%= product.productId.title %>(<%= product.quantity %>) @ $<%= product.productId.price.toFixed(2)%>/item</p>
+            <form action='/delete-add-cart' method='POST'>
+                <input type='hidden' name='productId' value='<%= product.productId._id%>' />
+                <input type='hidden' name='price' value='<%= product.price %>' />
+                <input type='hidden' name='_csrf' value="<%= csrfToken %>" />
+                <input type='submit' name='bulk_delete' class='btn' value='Bulk Delete'/>
+                <input type='submit' name='delete_one' class='btn' value='Delete One'/>
+                <input type='submit' name='add_cart' class='btn' value='Add cart'/>
+            </form>
+        </li>
+        <% } %>
+        </ul>
+        <hr />
+            <form action='/create-order' method='POST'>
+                <input type='hidden' name='_csrf' value="<%= csrfToken %>" />
+                <button class='btn' type='submit'>Order Now!</button>
+            </form>
+        <% } else { %>
+        <h1>Cart is empty</h1>
+        <% } %>
+    </main>
+<%- include('../includes/end.ejs') %>
