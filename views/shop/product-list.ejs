@@ -40,6 +40,11 @@
                     </article>
                 <% } %>
             </div>
+            <section class='pagination'>
+                <% for(let i = 1; i <= numOfPages; i++){ %>
+                <a href="/?page=<%= i %>"><%= i %></a>
+                <% } %>
+            </section>
         <% } else { %>
             <h1>No Products Found!</h1>
         <% } %>

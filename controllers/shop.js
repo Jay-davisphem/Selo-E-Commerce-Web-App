@@ -5,6 +5,7 @@ const PDFDoc = require("pdfkit");
 
 const Product = require("../models/product");
 const Order = require("../models/order");
+const ITEMS_PER_PAGE = 2;
 const getSharedProducts = async (
   req,
   res,
@@ -14,15 +15,25 @@ const getSharedProducts = async (
   isAdmin = false
 ) => {
   try {
-    let products;
-    if (!isAdmin || req.user.is_admin) products = await Product.find();
-    else products = await Product.find({ email: req.user.email });
-
+    const page = req.query.page;
+    let numOfProducts, prods;
+    if (!isAdmin || req.user.is_admin) {
+      prods = await Product.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+      numOfProducts = await Product.find().count();
+    } else {
+      prods = await Product.find({ email: req.user.email })
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+      numOfProducts = await Product.find({ email: req.user.email }).count();
+    }
     return res.render("shop/product-list", {
       pageTitle,
       path,
       isAdmin,
-      prods: products,
+      prods,
+      numOfPages: Math.ceil(numOfProducts / ITEMS_PER_PAGE),
       authUser: req.user,
     });
   } catch (err) {
