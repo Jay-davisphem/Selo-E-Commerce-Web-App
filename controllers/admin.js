@@ -23,7 +23,7 @@ const postProduct = async (req, res, next = null) => {
     });
   }
   try {
-    const imageUrl = image.path;
+    const imageUrl = image?.path;
     if (productId) {
       const product = await Product.findOne({ _id: productId });
       if (
@@ -34,9 +34,10 @@ const postProduct = async (req, res, next = null) => {
         )
       )
         return res.redirect("/");
-      if (image) deleteFile(product.imageUrl);
-      if (!image) return await product.update({ title, price, description });
-      return await product.update({ title, price, description, imageUrl });
+      if (imageUrl) deleteFile(product?.imageUrl);
+      if (!imageUrl) await product.updateOne({ title, price, description });
+      else await product.updateOne({ title, price, description, imageUrl });
+      return res.redirect('/admin/products')
     } else {
       const product = new Product({
         title,
@@ -115,6 +116,7 @@ exports.getProducts = async (req, res, next) => {
   await getSharedProducts(
     req,
     res,
+    next,
     "Admin - Products",
     "/admin/products",
     true

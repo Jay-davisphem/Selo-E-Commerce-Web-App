@@ -8,6 +8,7 @@ const Order = require("../models/order");
 const getSharedProducts = async (
   req,
   res,
+  next,
   pageTitle,
   path,
   isAdmin = false
@@ -49,7 +50,7 @@ exports.getProduct = async (req, res, next) => {
   }
 };
 exports.getIndex = async (req, res, next) => {
-  await getSharedProducts(req, res, "Shop", "/");
+  await getSharedProducts(req, res, next, "Shop", "/");
 };
 
 exports.getCart = (req, res, next) => {

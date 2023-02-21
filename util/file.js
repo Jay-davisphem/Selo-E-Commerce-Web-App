@@ -4,6 +4,6 @@ exports.deleteFile = (filePath, cb=null) => {
     return cb()
   return fs.unlink(filePath, (err) => {
     if(err)
-      throw err
+      console.error(err)
   })
 }
